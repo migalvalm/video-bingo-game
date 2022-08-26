@@ -1,0 +1,11 @@
+[gd_scene format=2]
+
+[node name="CardLine" type="HBoxContainer"]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 100.0
+margin_bottom = 100.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 75
+alignment = 1

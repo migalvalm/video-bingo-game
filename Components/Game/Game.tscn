@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Components/Game/Game.gd" type="Script" id=2]
+[ext_resource path="res://Components/Game/GameStats.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Components/Map/Map.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Components/Card/Card.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sounds/start.mp3" type="AudioStream" id=6]
+[ext_resource path="res://Resources/Ball/BallNumberGenerator.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Components/Menu/Pause/Pause.tscn" type="PackedScene" id=8]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 32.9848
+
+[node name="Game" type="Node2D"]
+position = Vector2( -16, 8 )
+script = ExtResource( 2 )
+
+[node name="BallNumberGenerator" parent="." instance=ExtResource( 7 )]
+
+[node name="Map" parent="." instance=ExtResource( 4 )]
+position = Vector2( 16, -8 )
+
+[node name="Card" parent="." instance=ExtResource( 5 )]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 1088, 256 )
+collision_layer = 4
+collision_mask = 4
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+
+[node name="GameStats" parent="." instance=ExtResource( 3 )]
+layer = 0
+
+[node name="StartGame" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -11.0
+pitch_scale = 1.57
+
+[node name="Pause" parent="." instance=ExtResource( 8 )]
+layer = 0
+
+[connection signal="extraction_complete" from="BallNumberGenerator" to="." method="_on_BallNumberGenerator_extraction_complete"]
+[connection signal="bingo" from="Card" to="." method="_on_Card_bingo"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="body_shape_entered" from="Area2D" to="." method="_on_Area2D_body_shape_entered"]

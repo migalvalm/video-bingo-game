@@ -1,0 +1,145 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Fonts/Silkscreen-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Sounds/main_menu.mp3" type="AudioStream" id=2]
+[ext_resource path="res://Components/Menu/EndGame/EndGame.gd" type="Script" id=3]
+[ext_resource path="res://Sounds/defeat.mp3" type="AudioStream" id=4]
+[ext_resource path="res://Sounds/bingo.mp3" type="AudioStream" id=5]
+[ext_resource path="res://Components/Game/Game.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Components/Menu/Main/MainMenu.tscn" type="PackedScene" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 125
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 75
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0, 0, 0, 0.490196 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0, 0, 0.686275 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0, 0, 0.392157 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="EndGame" type="Node2D"]
+script = ExtResource( 3 )
+mainGameScene = ExtResource( 6 )
+mainMenuScene = ExtResource( 7 )
+
+[node name="Layer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="ColorRect" type="ColorRect" parent="Layer"]
+margin_right = 1280.0
+margin_bottom = 720.0
+color = Color( 0.156863, 0.486275, 0.172549, 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Layer"]
+margin_right = 1280.0
+margin_bottom = 720.0
+custom_constants/margin_right = 200
+custom_constants/margin_top = 10
+custom_constants/margin_left = 200
+custom_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Layer/MarginContainer"]
+margin_left = 200.0
+margin_top = 10.0
+margin_right = 1080.0
+margin_bottom = 670.0
+
+[node name="StateText" type="Label" parent="Layer/MarginContainer/VBoxContainer"]
+margin_right = 880.0
+margin_bottom = 328.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "game_state"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Layer/MarginContainer/VBoxContainer"]
+margin_top = 332.0
+margin_right = 880.0
+margin_bottom = 660.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+
+[node name="MarginContainer3" type="MarginContainer" parent="Layer/MarginContainer/VBoxContainer/VBoxContainer"]
+margin_right = 880.0
+margin_bottom = 154.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+
+[node name="YesButton" type="Button" parent="Layer/MarginContainer/VBoxContainer/VBoxContainer/MarginContainer3"]
+margin_left = 50.0
+margin_right = 830.0
+margin_bottom = 154.0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "Play Again"
+
+[node name="MarginContainer2" type="MarginContainer" parent="Layer/MarginContainer/VBoxContainer/VBoxContainer"]
+margin_top = 174.0
+margin_right = 880.0
+margin_bottom = 328.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+
+[node name="NoButton" type="Button" parent="Layer/MarginContainer/VBoxContainer/VBoxContainer/MarginContainer2"]
+margin_left = 50.0
+margin_right = 830.0
+margin_bottom = 154.0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "Main Menu"
+
+[node name="MainMenu" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -8.047
+pitch_scale = 0.67
+mix_target = 2
+
+[node name="Defeat" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -18.646
+
+[node name="Bingo" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[connection signal="button_up" from="Layer/MarginContainer/VBoxContainer/VBoxContainer/MarginContainer3/YesButton" to="." method="_on_YesButton_button_up"]
+[connection signal="button_down" from="Layer/MarginContainer/VBoxContainer/VBoxContainer/MarginContainer2/NoButton" to="." method="_on_NoButton_button_down"]
